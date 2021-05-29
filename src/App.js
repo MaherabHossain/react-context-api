@@ -1,25 +1,37 @@
-import logo from './logo.svg';
 import './App.css';
+import Counter from './components/Counter'
+import OnClick from './components/OnClick'
+import Helper from './components/Helper'
+import ThemeContext from './components/Context/ThemeContex'
+import React, { Component } from 'react'
+class App extends Component {
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+  state = {
+    theme:'bright',
+    // switchTheme: ()=>{
+    //   this.setState({theme: this.state.theme==='bright'?'dark':'bright'});
+    // }
+  }
+  switchTheme = () => {
+    this.setState({theme: this.state.theme==='bright'?'dark':'bright'});
+  }
+  render(){
+     const {theme} = this.state;
+      return (
+        <div className="App">
+            <Counter>
+              {(count,incrementCount)=>(
+                <OnClick
+                    count={count}
+                    incrementCount={incrementCount}
+                /> )}
+            </Counter>
+            <ThemeContext.Provider value={{theme,switchTheme:this.switchTheme}}>
+                <Helper />
+            </ThemeContext.Provider>
+        </div>
+      );
+  }
 }
 
 export default App;
